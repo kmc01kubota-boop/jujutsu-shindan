@@ -31,6 +31,13 @@ function getRankStyle(rank: string): {
         border: "border-amber-300",
         pill: "bg-amber-600 text-white",
       };
+    case "特別1級":
+      return {
+        bg: "bg-amber-50",
+        text: "text-amber-600",
+        border: "border-amber-200",
+        pill: "bg-amber-500 text-white",
+      };
     case "1級":
       return {
         bg: "bg-slate-50",
@@ -52,6 +59,13 @@ function getRankStyle(rank: string): {
         border: "border-orange-200",
         pill: "bg-orange-500 text-white",
       };
+    case "準2級":
+      return {
+        bg: "bg-orange-50",
+        text: "text-orange-600",
+        border: "border-orange-200",
+        pill: "bg-orange-400 text-white",
+      };
     case "3級":
       return {
         bg: "bg-stone-50",
@@ -66,6 +80,13 @@ function getRankStyle(rank: string): {
         border: "border-stone-200",
         pill: "bg-stone-400 text-white",
       };
+    case "等級不明":
+      return {
+        bg: "bg-violet-50",
+        text: "text-violet-600",
+        border: "border-violet-200",
+        pill: "bg-violet-500 text-white",
+      };
     default:
       return {
         bg: "bg-stone-50",
@@ -78,6 +99,9 @@ function getRankStyle(rank: string): {
 
 // Rank display label for share text
 function getRankLabel(rank: string, charCategory: string): string {
+  if (rank === "等級不明") {
+    return "【等級不明】規格外";
+  }
   if (charCategory === "呪霊・呪詛師") {
     return `【${rank}呪霊】クラス`;
   }
