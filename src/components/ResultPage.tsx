@@ -98,8 +98,9 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
   const shareText = encodeURIComponent(
     `私は【${character.name}】タイプでした！\n${character.catchcopy}${yukiPart}\nあなたは${rankLabel}。\n術式：${character.technique}\n#呪術廻戦診断 #領域展開`
   );
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}`;
-  const lineUrl = `https://social-plugins.line.me/lineit/share?text=${shareText}`;
+  const siteUrl = "https://jujutsu-shindan.vercel.app";
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(siteUrl)}`;
+  const lineUrl = `https://line.me/R/share?text=${shareText}%0A${encodeURIComponent(siteUrl)}`;
 
   return (
     <>
