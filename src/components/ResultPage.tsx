@@ -21,57 +21,57 @@ function getRankStyle(rank: string): {
   bg: string;
   text: string;
   border: string;
-  glow: string;
+  pill: string;
 } {
   switch (rank) {
     case "特級":
       return {
-        bg: "bg-yellow-900/40",
-        text: "text-yellow-300",
-        border: "border-yellow-500/60",
-        glow: "0 0 20px rgba(234,179,8,0.5), 0 0 40px rgba(234,179,8,0.2)",
+        bg: "bg-amber-50",
+        text: "text-amber-700",
+        border: "border-amber-300",
+        pill: "bg-amber-600 text-white",
       };
     case "1級":
       return {
-        bg: "bg-slate-600/40",
-        text: "text-slate-200",
-        border: "border-slate-400/60",
-        glow: "0 0 14px rgba(203,213,225,0.4)",
+        bg: "bg-slate-50",
+        text: "text-slate-700",
+        border: "border-slate-300",
+        pill: "bg-slate-600 text-white",
       };
     case "準1級":
       return {
-        bg: "bg-slate-700/40",
-        text: "text-slate-300",
-        border: "border-slate-500/50",
-        glow: "0 0 10px rgba(148,163,184,0.3)",
+        bg: "bg-slate-50",
+        text: "text-slate-600",
+        border: "border-slate-200",
+        pill: "bg-slate-500 text-white",
       };
     case "2級":
       return {
-        bg: "bg-amber-900/30",
-        text: "text-amber-400",
-        border: "border-amber-600/40",
-        glow: "0 0 8px rgba(217,119,6,0.3)",
+        bg: "bg-orange-50",
+        text: "text-orange-700",
+        border: "border-orange-200",
+        pill: "bg-orange-500 text-white",
       };
     case "3級":
       return {
-        bg: "bg-stone-800/40",
-        text: "text-stone-400",
-        border: "border-stone-600/40",
-        glow: "none",
+        bg: "bg-stone-50",
+        text: "text-stone-600",
+        border: "border-stone-200",
+        pill: "bg-stone-500 text-white",
       };
     case "4級":
       return {
-        bg: "bg-stone-900/40",
+        bg: "bg-stone-50",
         text: "text-stone-500",
-        border: "border-stone-700/40",
-        glow: "none",
+        border: "border-stone-200",
+        pill: "bg-stone-400 text-white",
       };
     default:
       return {
-        bg: "bg-stone-800/40",
-        text: "text-stone-400",
-        border: "border-stone-600/40",
-        glow: "none",
+        bg: "bg-stone-50",
+        text: "text-stone-500",
+        border: "border-stone-200",
+        pill: "bg-stone-400 text-white",
       };
   }
 }
@@ -105,162 +105,94 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
     <>
       <style>{`
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-
         @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
         }
-
         @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+          from { opacity: 0; transform: translateX(-20px); }
+          to { opacity: 1; transform: translateX(0); }
         }
-
         @keyframes barFill {
           from { width: 0%; }
         }
-
-        @keyframes glowPulse {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
-        }
-
         @keyframes headerReveal {
-          0% {
-            opacity: 0;
-            transform: translateY(-20px) scale(0.9);
-            letter-spacing: 0.5em;
-          }
-          60% {
-            opacity: 1;
-            transform: translateY(0) scale(1.05);
-            letter-spacing: 0.3em;
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            letter-spacing: 0.2em;
-          }
+          0% { opacity: 0; transform: translateY(-15px); letter-spacing: 0.5em; }
+          60% { opacity: 1; transform: translateY(0); letter-spacing: 0.3em; }
+          100% { opacity: 1; transform: translateY(0); letter-spacing: 0.2em; }
         }
-
         @keyframes nameReveal {
-          0% {
-            opacity: 0;
-            transform: scale(0.6);
-            filter: blur(10px);
-          }
-          50% {
-            opacity: 0.8;
-            transform: scale(1.08);
-            filter: blur(2px);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0px);
-          }
+          0% { opacity: 0; transform: scale(0.7); filter: blur(8px); }
+          50% { opacity: 0.9; transform: scale(1.03); filter: blur(1px); }
+          100% { opacity: 1; transform: scale(1); filter: blur(0px); }
         }
 
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .animate-fade-in {
-          animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        .animate-scale-in {
-          animation: scaleIn 0.6s ease-out forwards;
-        }
-
-        .animate-slide-in-left {
-          animation: slideInLeft 0.5s ease-out forwards;
-        }
-
-        .animate-header-reveal {
-          animation: headerReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-
-        .animate-name-reveal {
-          animation: nameReveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-
-        .animate-glow-pulse {
-          animation: glowPulse 2s ease-in-out infinite;
-        }
+        .anim-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+        .anim-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        .anim-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+        .anim-slide-left { animation: slideInLeft 0.4s ease-out forwards; }
+        .anim-header { animation: headerReveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .anim-name { animation: nameReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
       `}</style>
 
-      <div className="min-h-screen bg-zinc-950 text-white overflow-hidden">
-        {/* Background accent gradient */}
+      {/* Full-page white background container — self-contained, overrides body dark */}
+      <div
+        className="min-h-screen overflow-hidden"
+        style={{
+          background: "#FFFFFF",
+          color: "#1D1D1F",
+          position: "relative",
+          zIndex: 20,
+        }}
+      >
+        {/* Soft accent gradient at top */}
         <div
-          className="pointer-events-none fixed inset-0 opacity-20"
+          className="pointer-events-none absolute inset-x-0 top-0 h-80 opacity-40"
           style={{
-            background: `radial-gradient(ellipse at 50% 20%, ${character.color}44 0%, transparent 60%)`,
+            background: `radial-gradient(ellipse at 50% 0%, ${character.color}18 0%, transparent 70%)`,
           }}
         />
 
         <div className="relative mx-auto max-w-2xl px-5 py-12">
           {/* ===== Header: 診断結果 ===== */}
           <div
-            className="animate-header-reveal mb-10 text-center opacity-0"
+            className="anim-header mb-10 text-center opacity-0"
             style={{ animationDelay: "0.2s" }}
           >
-            <p className="mb-2 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "#86868B" }}>
               Jujutsu Kaisen Character Diagnosis
             </p>
-            <h1 className="text-3xl font-black tracking-[0.2em] text-white sm:text-4xl">
+            <h1 className="text-3xl font-black tracking-[0.15em] sm:text-4xl" style={{ color: "#1D1D1F" }}>
               診断結果
             </h1>
             <div
-              className="mx-auto mt-3 h-px w-24"
+              className="mx-auto mt-3 h-[2px] w-20 rounded-full"
               style={{ background: `linear-gradient(90deg, transparent, ${character.color}, transparent)` }}
             />
           </div>
 
           {/* ===== Character Name ===== */}
           <div
-            className="animate-name-reveal mb-8 text-center opacity-0"
+            className="anim-name mb-8 text-center opacity-0"
             style={{ animationDelay: "0.8s" }}
           >
-            <p className="mb-2 text-sm tracking-widest text-zinc-500">
+            <p className="mb-2 text-sm font-medium tracking-widest" style={{ color: "#86868B" }}>
               あなたは…
             </p>
             <h2
               className="text-4xl font-black sm:text-5xl"
-              style={{
-                color: character.color,
-                textShadow: `0 0 30px ${character.color}88, 0 0 60px ${character.color}44`,
-              }}
+              style={{ color: character.color }}
             >
               {character.name}
             </h2>
-            <p className="mt-1 text-sm text-zinc-600">{character.fullName}</p>
+            <p className="mt-1 text-sm font-medium" style={{ color: "#AEAEB2" }}>{character.fullName}</p>
             <p
               className="mt-2 text-sm font-bold tracking-wider"
               style={{ color: character.color }}
@@ -271,15 +203,12 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Catchcopy ===== */}
           <div
-            className="animate-fade-in-up mb-6 text-center opacity-0"
+            className="anim-fade-in-up mb-6 text-center opacity-0"
             style={{ animationDelay: "1.1s" }}
           >
             <p
               className="text-base font-bold italic tracking-wider sm:text-lg"
-              style={{
-                color: character.color,
-                textShadow: `0 0 20px ${character.color}44`,
-              }}
+              style={{ color: character.color }}
             >
               {character.catchcopy}
             </p>
@@ -287,10 +216,10 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== SNS Share (Primary Position) ===== */}
           <div
-            className="animate-fade-in-up mb-8 opacity-0"
+            className="anim-fade-in-up mb-8 opacity-0"
             style={{ animationDelay: "1.4s" }}
           >
-            <p className="mb-3 text-center text-xs tracking-wider text-zinc-500">
+            <p className="mb-3 text-center text-xs font-medium tracking-wider" style={{ color: "#86868B" }}>
               結果をシェアして友達と比べよう！
             </p>
             <div className="flex gap-3">
@@ -299,18 +228,12 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
                 href={twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2.5 rounded-xl bg-black py-4 text-base font-bold text-white transition-all hover:bg-zinc-800 active:scale-95 sm:text-lg"
+                className="flex flex-1 items-center justify-center gap-2.5 rounded-2xl py-4 text-base font-bold text-white transition-all hover:opacity-90 active:scale-95 sm:text-lg"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  boxShadow: "0 0 15px rgba(255,255,255,0.05)",
+                  background: "#1D1D1F",
                 }}
               >
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
                 <span>Xでシェア</span>
@@ -321,17 +244,9 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
                 href={lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2.5 rounded-xl bg-[#06C755] py-4 text-base font-bold text-white transition-all hover:bg-[#05a849] active:scale-95 sm:text-lg"
-                style={{
-                  boxShadow: "0 0 15px rgba(6,199,85,0.2)",
-                }}
+                className="flex flex-1 items-center justify-center gap-2.5 rounded-2xl bg-[#06C755] py-4 text-base font-bold text-white transition-all hover:opacity-90 active:scale-95 sm:text-lg"
               >
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 2C6.48 2 2 5.82 2 10.5c0 3.57 2.96 6.6 7.16 7.72-.08.58-.5 2.13-.57 2.46-.1.44.16.43.34.31.13-.08 2.15-1.46 3.03-2.06.33.04.67.07 1.04.07 5.52 0 10-3.82 10-8.5S17.52 2 12 2z" />
                 </svg>
                 <span>LINEでシェア</span>
@@ -341,24 +256,24 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Quote ===== */}
           <div
-            className="animate-fade-in-up mb-10 text-center opacity-0"
+            className="anim-fade-in-up mb-10 text-center opacity-0"
             style={{ animationDelay: "1.7s" }}
           >
             <div className="relative inline-block px-6 py-4">
               <span
-                className="absolute left-0 top-0 text-4xl leading-none opacity-30"
+                className="absolute left-0 top-0 text-4xl leading-none opacity-20"
                 style={{ color: character.color }}
               >
                 &ldquo;
               </span>
               <p
-                className="text-lg font-medium italic tracking-wide sm:text-xl"
-                style={{ color: character.color }}
+                className="text-lg font-semibold italic tracking-wide sm:text-xl"
+                style={{ color: "#1D1D1F" }}
               >
                 {character.quote}
               </p>
               <span
-                className="absolute bottom-0 right-0 text-4xl leading-none opacity-30"
+                className="absolute bottom-0 right-0 text-4xl leading-none opacity-20"
                 style={{ color: character.color }}
               >
                 &rdquo;
@@ -368,19 +283,18 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Stats Section ===== */}
           <div
-            className="animate-fade-in-up mb-8 space-y-5 opacity-0"
+            className="anim-fade-in-up mb-8 space-y-5 opacity-0"
             style={{ animationDelay: "2.0s" }}
           >
             {/* Rank Badge */}
             <div className="flex items-center justify-center gap-4">
               <div
-                className={`inline-flex items-center gap-2 rounded-full border px-5 py-2 ${rankStyle.bg} ${rankStyle.border}`}
-                style={{ boxShadow: rankStyle.glow }}
+                className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 ${rankStyle.bg} ${rankStyle.border}`}
               >
-                <span className="text-xs tracking-wider text-zinc-400">
+                <span className="text-xs font-medium tracking-wider" style={{ color: "#86868B" }}>
                   呪術師ランク
                 </span>
-                <span className={`text-xl font-black ${rankStyle.text}`}>
+                <span className={`rounded-full px-3 py-0.5 text-base font-black ${rankStyle.pill}`}>
                   {rank}
                 </span>
               </div>
@@ -388,11 +302,11 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
             {/* Technique */}
             <div className="text-center">
-              <span className="text-xs tracking-wider text-zinc-500">
+              <span className="text-xs font-medium tracking-wider" style={{ color: "#86868B" }}>
                 術式
               </span>
               <p
-                className="mt-1 text-lg font-semibold"
+                className="mt-1 text-lg font-bold"
                 style={{ color: character.color }}
               >
                 {character.technique}
@@ -401,16 +315,16 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
             {/* Match Score */}
             <div className="mx-auto max-w-md">
-              <div className="mb-1 flex items-center justify-between text-sm">
-                <span className="text-zinc-400">マッチ度</span>
+              <div className="mb-1.5 flex items-center justify-between text-sm">
+                <span className="font-medium" style={{ color: "#86868B" }}>マッチ度</span>
                 <span
-                  className="font-mono text-lg font-bold"
+                  className="font-mono text-lg font-black"
                   style={{ color: character.color }}
                 >
                   {score}%
                 </span>
               </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-zinc-800">
+              <div className="h-3 overflow-hidden rounded-full" style={{ background: "#F5F5F7" }}>
                 <div
                   className="h-full rounded-full"
                   style={{
@@ -426,28 +340,32 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Top Tags ===== */}
           <div
-            className="animate-fade-in-up mb-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-5 opacity-0"
-            style={{ animationDelay: "2.3s" }}
+            className="anim-fade-in-up mb-8 rounded-3xl border p-6 opacity-0"
+            style={{
+              animationDelay: "2.3s",
+              borderColor: "#E5E5EA",
+              background: "#F5F5F7",
+            }}
           >
-            <h3 className="mb-4 text-center text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+            <h3 className="mb-4 text-center text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "#86868B" }}>
               あなたの属性
             </h3>
             <div className="space-y-3">
               {topTags.map((tag, i) => (
                 <div
                   key={tag.key}
-                  className="animate-slide-in-left opacity-0"
+                  className="anim-slide-left opacity-0"
                   style={{ animationDelay: `${2.6 + i * 0.15}s` }}
                 >
                   <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="font-medium text-zinc-300">
+                    <span className="font-bold" style={{ color: "#1D1D1F" }}>
                       {tag.label}
                     </span>
-                    <span className="font-mono text-xs text-zinc-500">
+                    <span className="font-mono text-xs font-bold" style={{ color: "#86868B" }}>
                       {tag.value}
                     </span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
+                  <div className="h-2.5 overflow-hidden rounded-full" style={{ background: "#E5E5EA" }}>
                     <div
                       className="h-full rounded-full"
                       style={{
@@ -465,10 +383,14 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Radar Chart ===== */}
           <div
-            className="animate-fade-in-up mb-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-5 opacity-0"
-            style={{ animationDelay: "2.7s" }}
+            className="anim-fade-in-up mb-8 rounded-3xl border p-6 opacity-0"
+            style={{
+              animationDelay: "2.7s",
+              borderColor: "#E5E5EA",
+              background: "#F5F5F7",
+            }}
           >
-            <h3 className="mb-3 text-center text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+            <h3 className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "#86868B" }}>
               ステータス
             </h3>
             <RadarChart
@@ -480,10 +402,14 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Character Description ===== */}
           <div
-            className="animate-fade-in-up mb-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-5 opacity-0"
-            style={{ animationDelay: "3.0s" }}
+            className="anim-fade-in-up mb-8 rounded-3xl border p-6 opacity-0"
+            style={{
+              animationDelay: "3.0s",
+              borderColor: "#E5E5EA",
+              background: "#F5F5F7",
+            }}
           >
-            <p className="text-sm leading-relaxed text-zinc-400">
+            <p className="text-sm font-medium leading-relaxed" style={{ color: "#48484A" }}>
               {character.description}
             </p>
           </div>
@@ -492,88 +418,88 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Compatibility Section ===== */}
           <div
-            className="animate-fade-in-up mb-8 grid grid-cols-2 gap-4 opacity-0"
+            className="anim-fade-in-up mb-8 grid grid-cols-2 gap-4 opacity-0"
             style={{ animationDelay: "3.5s" }}
           >
             {/* Best Friend */}
-            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-4 text-center">
-              <p className="mb-1 text-xs tracking-wider text-zinc-500">
+            <div
+              className="rounded-3xl border p-5 text-center"
+              style={{ borderColor: "#E5E5EA", background: "#F5F5F7" }}
+            >
+              <p className="mb-1 text-xs font-bold tracking-wider" style={{ color: "#86868B" }}>
                 親友（ベストフレンド）
               </p>
               <div
-                className="mx-auto my-2 h-px w-10"
+                className="mx-auto my-2 h-[2px] w-10 rounded-full"
                 style={{ background: `linear-gradient(90deg, transparent, ${character.color}66, transparent)` }}
               />
               {bestFriend ? (
                 <p
-                  className="text-base font-bold sm:text-lg"
+                  className="text-base font-black sm:text-lg"
                   style={{ color: bestFriend.color }}
                 >
                   {bestFriend.name}
                 </p>
               ) : (
-                <p className="text-base font-bold text-zinc-500">---</p>
+                <p className="text-base font-bold" style={{ color: "#AEAEB2" }}>---</p>
               )}
             </div>
 
             {/* Rival */}
-            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-4 text-center">
-              <p className="mb-1 text-xs tracking-wider text-zinc-500">
+            <div
+              className="rounded-3xl border p-5 text-center"
+              style={{ borderColor: "#E5E5EA", background: "#F5F5F7" }}
+            >
+              <p className="mb-1 text-xs font-bold tracking-wider" style={{ color: "#86868B" }}>
                 宿敵（ライバル）
               </p>
               <div
-                className="mx-auto my-2 h-px w-10"
-                style={{ background: "linear-gradient(90deg, transparent, #ef444466, transparent)" }}
+                className="mx-auto my-2 h-[2px] w-10 rounded-full"
+                style={{ background: "linear-gradient(90deg, transparent, #EF444466, transparent)" }}
               />
               {rival ? (
-                <p
-                  className="text-base font-bold text-red-400 sm:text-lg"
-                >
+                <p className="text-base font-black text-red-500 sm:text-lg">
                   {rival.name}
                 </p>
               ) : (
-                <p className="text-base font-bold text-zinc-500">---</p>
+                <p className="text-base font-bold" style={{ color: "#AEAEB2" }}>---</p>
               )}
             </div>
           </div>
 
           {/* ===== OGP-style Card ===== */}
           <div
-            className="animate-scale-in mb-10 overflow-hidden rounded-2xl border border-zinc-700/60 opacity-0"
-            style={{ animationDelay: "3.8s" }}
+            className="anim-scale-in mb-10 overflow-hidden rounded-3xl opacity-0"
+            style={{
+              animationDelay: "3.8s",
+              border: `1.5px solid ${character.color}30`,
+              background: `linear-gradient(160deg, ${character.color}08 0%, #FFFFFF 40%, #FFFFFF 60%, ${character.color}05 100%)`,
+            }}
           >
-            <div
-              className="relative px-6 py-8 sm:px-8"
-              style={{
-                background: `linear-gradient(160deg, ${character.color}22 0%, #0a0a0a 40%, #0a0a0a 60%, ${character.color}11 100%)`,
-              }}
-            >
+            <div className="relative px-6 py-8 sm:px-8">
               {/* Decorative corner accents */}
               <div
-                className="absolute left-0 top-0 h-16 w-16 opacity-30"
+                className="absolute left-0 top-0 h-12 w-12 opacity-40"
                 style={{
                   borderTop: `2px solid ${character.color}`,
                   borderLeft: `2px solid ${character.color}`,
                 }}
               />
               <div
-                className="absolute bottom-0 right-0 h-16 w-16 opacity-30"
+                className="absolute bottom-0 right-0 h-12 w-12 opacity-40"
                 style={{
                   borderBottom: `2px solid ${character.color}`,
                   borderRight: `2px solid ${character.color}`,
                 }}
               />
 
-              <p className="mb-1 text-center text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-600">
+              <p className="mb-1 text-center text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: "#AEAEB2" }}>
                 呪術廻戦キャラ診断
               </p>
 
               <h3
                 className="mb-2 text-center text-3xl font-black sm:text-4xl"
-                style={{
-                  color: character.color,
-                  textShadow: `0 0 20px ${character.color}66`,
-                }}
+                style={{ color: character.color }}
               >
                 {character.name}
               </h3>
@@ -581,14 +507,13 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
               <div className="mb-3 flex items-center justify-center gap-3">
                 <div
                   className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${rankStyle.bg} ${rankStyle.border}`}
-                  style={{ boxShadow: rankStyle.glow }}
                 >
-                  <span className="text-zinc-500">ランク</span>
-                  <span className={`font-bold ${rankStyle.text}`}>{rank}</span>
+                  <span style={{ color: "#86868B" }}>ランク</span>
+                  <span className={`font-black ${rankStyle.text}`}>{rank}</span>
                 </div>
-                <span className="text-xs text-zinc-600">|</span>
+                <span className="text-xs" style={{ color: "#D2D2D7" }}>|</span>
                 <span
-                  className="text-xs font-medium"
+                  className="text-xs font-bold"
                   style={{ color: character.color }}
                 >
                   {character.technique}
@@ -597,19 +522,19 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
               <p
                 className="mb-2 text-center text-xs font-bold italic tracking-wider"
-                style={{ color: `${character.color}99` }}
+                style={{ color: `${character.color}` }}
               >
                 {character.catchcopy}
               </p>
               <p
                 className="text-center text-sm italic leading-relaxed"
-                style={{ color: `${character.color}cc` }}
+                style={{ color: "#48484A" }}
               >
                 &ldquo;{character.quote}&rdquo;
               </p>
 
               <div className="mt-4 text-center">
-                <p className="text-[10px] tracking-wider text-zinc-700">
+                <p className="text-[10px] font-medium tracking-wider" style={{ color: "#AEAEB2" }}>
                   #呪術廻戦キャラ診断
                 </p>
               </div>
@@ -618,7 +543,7 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
 
           {/* ===== Bottom Actions ===== */}
           <div
-            className="animate-fade-in-up mb-8 space-y-3 opacity-0"
+            className="anim-fade-in-up mb-8 space-y-3 opacity-0"
             style={{ animationDelay: "4.2s" }}
           >
             {/* Secondary share reminder */}
@@ -627,8 +552,8 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
                 href={twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 py-3 text-sm font-medium text-zinc-300 transition-all hover:bg-zinc-800"
-                style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold transition-all hover:opacity-80"
+                style={{ background: "#1D1D1F", color: "#FFFFFF" }}
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -639,7 +564,7 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
                 href={lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#06C755] px-4 py-3 text-sm font-bold text-white transition-all hover:bg-[#05a849]"
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#06C755] px-4 py-3 text-sm font-bold text-white transition-all hover:opacity-90"
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 2C6.48 2 2 5.82 2 10.5c0 3.57 2.96 6.6 7.16 7.72-.08.58-.5 2.13-.57 2.46-.1.44.16.43.34.31.13-.08 2.15-1.46 3.03-2.06.33.04.67.07 1.04.07 5.52 0 10-3.82 10-8.5S17.52 2 12 2z" />
@@ -648,10 +573,15 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
               </a>
             </div>
 
-            {/* Restart Button */}
+            {/* Restart Button — Apple black CTA */}
             <button
               onClick={onRestart}
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-5 py-3.5 text-sm font-medium text-zinc-400 transition-all hover:border-zinc-700 hover:bg-zinc-800 hover:text-white"
+              className="mt-2 w-full rounded-2xl border px-5 py-4 text-sm font-bold transition-all active:scale-[0.97]"
+              style={{
+                borderColor: "#D2D2D7",
+                background: "#F5F5F7",
+                color: "#1D1D1F",
+              }}
             >
               もう一度診断する
             </button>

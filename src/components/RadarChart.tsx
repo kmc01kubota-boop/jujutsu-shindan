@@ -21,55 +21,37 @@ function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
 
 /**
  * Determine the ideal text-anchor based on the label's angular position.
- *   - Top / Bottom (near 0° or 180°) → "middle"
- *   - Right hemisphere (350°–10° excluded, roughly 10°–170°) → "start"
- *   - Left hemisphere (190°–350°) → "end"
  */
 function getTextAnchor(angleDeg: number): "start" | "middle" | "end" {
-  // Normalize to 0–360
   const a = ((angleDeg % 360) + 360) % 360;
-
-  // Dead-top zone (345°–15°) and dead-bottom zone (165°–195°)
   if (a <= 15 || a >= 345) return "middle"; // top
   if (a >= 165 && a <= 195) return "middle"; // bottom
-
-  // Right hemisphere
   if (a > 15 && a < 165) return "start";
-
-  // Left hemisphere
   return "end";
 }
 
 /**
  * Fine-tune label x/y offset based on angle to prevent edge clipping.
+ * Increased offsets for white background readability.
  */
 function getLabelOffset(angleDeg: number): { dx: number; dy: number } {
   const a = ((angleDeg % 360) + 360) % 360;
-
-  // Top label — push slightly upward
-  if (a <= 15 || a >= 345) return { dx: 0, dy: -8 };
-
-  // Bottom label — push slightly downward
-  if (a >= 165 && a <= 195) return { dx: 0, dy: 8 };
-
-  // Right-side labels — push right
-  if (a > 15 && a < 165) return { dx: 6, dy: 0 };
-
-  // Left-side labels — push left
-  return { dx: -6, dy: 0 };
+  if (a <= 15 || a >= 345) return { dx: 0, dy: -12 };
+  if (a >= 165 && a <= 195) return { dx: 0, dy: 14 };
+  if (a > 15 && a < 165) return { dx: 8, dy: 0 };
+  return { dx: -8, dy: 0 };
 }
 
 export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps) {
-  // Chart geometry — padded center within a wider viewBox
-  const viewW = 380;
-  const viewH = 360;
+  const viewW = 400;
+  const viewH = 380;
   const cx = viewW / 2;
   const cy = viewH / 2;
-  const maxR = 105;
+  const maxR = 100;
   const levels = 5;
   const n = STATS.length;
   const angleStep = 360 / n;
-  const labelRadius = maxR + 36; // generous gap from vertices
+  const labelRadius = maxR + 48; // extra generous gap for light theme
 
   // Calculate stat values (0–1)
   const values = STATS.map((stat) => {
@@ -115,24 +97,23 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
     };
   });
 
-  // Soft glow filter ID
   const glowId = `radar-glow-${color.replace("#", "")}`;
 
   return (
     <div className="flex justify-center">
       <svg
         viewBox={`0 0 ${viewW} ${viewH}`}
-        className="w-full max-w-[320px]"
-        aria-label="レーダーチャート"
+        className="w-full max-w-[340px]"
+        aria-label="Radar chart showing character stats"
       >
         <defs>
-          {/* Soft Glow filter — Apple-style bloom */}
+          {/* Soft glow filter */}
           <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
             <feColorMatrix
               in="blur"
               type="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.45 0"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.35 0"
               result="glow"
             />
             <feMerge>
@@ -143,8 +124,8 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
 
           {/* Radial gradient for fill area */}
           <radialGradient id="radar-fill-grad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={color} stopOpacity="0.25" />
-            <stop offset="100%" stopColor={color} stopOpacity="0.06" />
+            <stop offset="0%" stopColor={color} stopOpacity="0.20" />
+            <stop offset="100%" stopColor={color} stopOpacity="0.05" />
           </radialGradient>
         </defs>
 
@@ -154,7 +135,7 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
             key={`grid-${i}`}
             points={points}
             fill="none"
-            stroke="rgba(113,113,122,0.18)"
+            stroke={i === levels - 1 ? "#D2D2D7" : "#E8E8ED"}
             strokeWidth={i === levels - 1 ? "1" : "0.5"}
           />
         ))}
@@ -167,7 +148,7 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
             y1={a.y1}
             x2={a.x2}
             y2={a.y2}
-            stroke="rgba(113,113,122,0.12)"
+            stroke="#E8E8ED"
             strokeWidth="0.5"
           />
         ))}
@@ -177,7 +158,7 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
           points={dataPoints}
           fill="url(#radar-fill-grad)"
           stroke={color}
-          strokeWidth="2"
+          strokeWidth="2.5"
           strokeLinejoin="round"
           filter={`url(#${glowId})`}
           className="radar-fill"
@@ -191,10 +172,10 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
               key={`dot-${i}`}
               cx={p.x}
               cy={p.y}
-              r="4.5"
+              r="5"
               fill={color}
-              stroke="#0a0a0f"
-              strokeWidth="1.5"
+              stroke="#FFFFFF"
+              strokeWidth="2"
               className="radar-dot"
               style={{ animationDelay: `${i * 0.12}s` }}
             />
@@ -207,24 +188,24 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
             {/* Stat name */}
             <text
               x={l.x}
-              y={l.y - 7}
+              y={l.y - 8}
               textAnchor={l.anchor}
               dominantBaseline="middle"
-              fill="#a1a1aa"
-              fontSize="9.5"
-              fontWeight="500"
-              letterSpacing="0.02em"
+              fill="#1D1D1F"
+              fontSize="10.5"
+              fontWeight="600"
+              letterSpacing="0.03em"
             >
               {l.label}
             </text>
             {/* Stat value */}
             <text
               x={l.x}
-              y={l.y + 9}
+              y={l.y + 10}
               textAnchor={l.anchor}
               dominantBaseline="middle"
               fill={color}
-              fontSize="12"
+              fontSize="13"
               fontWeight="700"
               fontFamily="'SF Mono', ui-monospace, monospace"
             >
@@ -262,7 +243,7 @@ export default function RadarChart({ tags, color, maxTagValue }: RadarChartProps
             }
             to {
               opacity: 1;
-              r: 4.5;
+              r: 5;
             }
           }
           @keyframes radarLabelFade {
