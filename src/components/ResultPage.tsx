@@ -317,7 +317,7 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
                 className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 ${rankStyle.bg} ${rankStyle.border}`}
               >
                 <span className="text-xs font-medium tracking-wider" style={{ color: "#86868B" }}>
-                  呪術師ランク
+                  あなたの呪術師ランク
                 </span>
                 <span className={`rounded-full px-3 py-0.5 text-base font-black ${rankStyle.pill}`}>
                   {rank}
@@ -533,7 +533,7 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
                 <div
                   className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs ${rankStyle.bg} ${rankStyle.border}`}
                 >
-                  <span style={{ color: "#86868B" }}>ランク</span>
+                  <span style={{ color: "#86868B" }}>あなたのランク</span>
                   <span className={`font-black ${rankStyle.text}`}>{rank}</span>
                 </div>
                 <span className="text-xs" style={{ color: "#D2D2D7" }}>|</span>
@@ -612,8 +612,34 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
             </button>
           </div>
 
-          {/* Footer spacer */}
-          <div className="h-8" />
+          {/* ===== Disclaimer Footer ===== */}
+          <footer
+            className="mt-6 border-t px-4 pb-10 pt-6 text-center"
+            style={{ borderColor: "#E5E5EA" }}
+          >
+            <p className="text-[10px] leading-relaxed tracking-wide" style={{ color: "#AEAEB2" }}>
+              ©芥見下々／集英社・呪術廻戦製作委員会
+            </p>
+            <p className="mt-1.5 text-[10px] leading-relaxed" style={{ color: "#C7C7CC" }}>
+              本サイトは有志による非公式のファンコンテンツであり、
+              <br className="sm:hidden" />
+              公式とは一切関係ありません。
+            </p>
+            <p className="mt-1 text-[10px] leading-relaxed" style={{ color: "#C7C7CC" }}>
+              使用されている画像の著作権は権利所有者に帰属します。
+            </p>
+            <p className="mt-1 text-[10px] leading-relaxed" style={{ color: "#C7C7CC" }}>
+              不適切な内容や権利侵害がございましたら、
+              <a
+                href="mailto:km.gattaca@gmail.com"
+                className="underline decoration-dotted underline-offset-2 transition-colors hover:text-[#86868B]"
+                style={{ color: "#AEAEB2" }}
+              >
+                km.gattaca@gmail.com
+              </a>
+              {" "}までご連絡ください。
+            </p>
+          </footer>
         </div>
       </div>
     </>
