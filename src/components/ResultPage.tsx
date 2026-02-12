@@ -639,6 +639,26 @@ export default function ResultPage({ result, rank, yukiAnswer, onRestart }: Resu
               </a>
               {" "}までご連絡ください。
             </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-4">
+              <a
+                href="https://mote-iq.com"
+                target="_blank"
+                rel="noopener"
+                className="text-[10px] underline decoration-dotted underline-offset-2 transition-colors hover:text-[#86868B]"
+                style={{ color: "#AEAEB2" }}
+              >
+                モテIQ｜大人の魅力診断
+              </a>
+              <a
+                href="https://frieren-shindan.vercel.app"
+                target="_blank"
+                rel="noopener"
+                className="text-[10px] underline decoration-dotted underline-offset-2 transition-colors hover:text-[#86868B]"
+                style={{ color: "#AEAEB2" }}
+              >
+                フリーレン キャラ診断
+              </a>
+            </div>
           </footer>
         </div>
       </div>
